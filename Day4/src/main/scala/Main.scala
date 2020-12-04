@@ -5,26 +5,23 @@ object Main extends App {
 
   val requiredFields = List("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
-
   val inputFile = Source.fromFile("./Day4/input.txt")
   println(parsePassports(inputFile)
     .map(parseSinglePassport)
-    .count(p => {
-      validatePasswordRules(p) && p.keys.forall(requiredFields.contains(_))
-    }))
+    .count(p => validatePasswordRules(p) && requiredFields.forall(p.keys.toList.contains(_))))
 
   inputFile.close()
 
   def parsePassports(inputFile: Source): Seq[String] =
     inputFile.getLines().mkString("\n").split("\n\n")
 
-  def parseSinglePassport(passport: String): Map[String, String] =
+  def parseSinglePassport(passport: String): Passport =
     passport.replace("\n", " ")
       .split(" ")
       .map(p => p.split(":").toList)
       .flatMap {
         case "cid" :: _ => None
-        case k :: v :: Nil => println(k, v); Some((k, v))
+        case k :: v :: Nil => Some((k, v))
         case _ => None
       }
       .toMap
@@ -40,8 +37,7 @@ object Main extends App {
         if hgt.contains("in") => (59 to 76).contains(hgt.replace("in", "").toInt)
       case ("hcl", hcl) => hcl.matches("#[0-9a-f]{6}")
       case ("ecl", ecl) => List("amb", "blu", "brn", "gry", "grn", "hzl", "oth").contains(ecl)
-      case ("pid", pid) => println(s"${pid}, ${pid.matches("[0-9]{9}")}");
-        pid.matches("[0-9]{9}")
+      case ("pid", pid) => pid.matches("[0-9]{9}")
       case _ => false
     }
   }
