@@ -8,7 +8,7 @@ object Main extends App {
   val inputFile = Source.fromFile("./Day4/input.txt")
   println(parsePassports(inputFile)
     .map(parseSinglePassport)
-    .count(p => validatePasswordRules(p) && requiredFields.forall(p.keys.toList.contains(_))))
+    .count(p => validatePassportRules(p) && requiredFields.forall(p.keys.toList.contains(_))))
 
   inputFile.close()
 
@@ -26,7 +26,7 @@ object Main extends App {
       }
       .toMap
 
-  def validatePasswordRules(passport: Passport): Boolean = {
+  def validatePassportRules(passport: Passport): Boolean =
     passport.forall {
       case ("byr", byr) => byr.length == 4 && (1920 to 2002).contains(byr.toInt)
       case ("iyr", iyr) => iyr.length == 4 && (2010 to 2020).contains(iyr.toInt)
@@ -40,5 +40,4 @@ object Main extends App {
       case ("pid", pid) => pid.matches("[0-9]{9}")
       case _ => false
     }
-  }
 }
