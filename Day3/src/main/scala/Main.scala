@@ -7,7 +7,6 @@ case object Tree extends MapField
 case object Empty extends MapField
 
 object Main {
-
   type GameMap = Seq[Seq[MapField]]
 
   def main(args: Array[String]): Unit = {
@@ -21,18 +20,18 @@ object Main {
     println(countTrees(pathFunc(1, 3)))
 
     val toCheck = List((1, 1), (1, 3), (1, 5), (1, 7), (2, 1))
-
     println(toCheck.map(t => countTrees(pathFunc(t._1, t._2))).product)
 
     inputFile.close()
   }
 
-  def parseFile(input: Source): GameMap = (for {
-    line <- input.getLines()
-    fields = for {symbol <- line.split("").toList
-                  field = if (symbol == "#") Tree else Empty
-                  } yield field
-  } yield fields).toList
+  def parseFile(input: Source): GameMap = {
+    input.getLines()
+      .map(_.split("")
+        .map(symbol => if (symbol == "#") Tree else Empty)
+        .toList)
+      .toList
+  }
 
   def traverseMap(map: GameMap, x: Int, y: Int)(moveX: Int, moveY: Int): List[MapField] = {
     map.lift(x) match {
