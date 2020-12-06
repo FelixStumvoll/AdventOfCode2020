@@ -11,8 +11,7 @@ object Main extends App {
   def part2(questions: Seq[String]): Int =
     questions.map(q => countDistinct(q.filter(c => q.split("\n").forall(_.contains(c))))).sum
 
-  def countDistinct(seq: Seq[Any]): Int = seq.toSet.size
+  def countDistinct(seq: Seq[_]): Int = seq.toSet.size
 
-  def parseInput(source: Source): Seq[String] =
-    source.getLines().mkString("\n").split("\n\n")
+  def parseInput(source: Source): Seq[String] = source.getLines().mkString("\n").split("\n\n")
 }
