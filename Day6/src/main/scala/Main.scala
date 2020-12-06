@@ -6,12 +6,10 @@ object Main extends App {
   println(part2(questions))
 
   def part1(questions: Seq[String]): Int =
-    questions.map(q => countDistinct(q.replace("\n", ""))).sum
+    questions.map(q => q.replace("\n", "").toSet.size).sum
 
   def part2(questions: Seq[String]): Int =
-    questions.map(q => countDistinct(q.filter(c => q.split("\n").forall(_.contains(c))))).sum
-
-  def countDistinct(seq: Seq[_]): Int = seq.toSet.size
+    questions.map(_.split("\n").reduce(_.intersect(_)).length).sum
 
   def parseInput(source: Source): Seq[String] = source.getLines().mkString("\n").split("\n\n")
 }
