@@ -6,24 +6,20 @@ case object Tree extends MapField
 
 case object Empty extends MapField
 
-object Main {
+object Main extends App {
   type GameMap = Seq[Seq[MapField]]
 
-  def main(args: Array[String]): Unit = {
-    val inputFile = Source.fromFile("./Day3/input.txt")
-    val map = parseFile(inputFile)
+  val inputFile = Source.fromFile("./Day3/input.txt")
+  val map = parseFile(inputFile)
 
-    def countTrees(path: Seq[MapField]): BigInt = path.count(_ == Tree)
+  def countTrees(path: Seq[MapField]): BigInt = path.count(_ == Tree)
 
-    val pathFunc = traverseMap(map, 0, 0) _
+  val pathFunc = traverseMap(map, 0, 0) _
 
-    println(countTrees(pathFunc(1, 3)))
+  println(countTrees(pathFunc(1, 3)))
 
-    val toCheck = List((1, 1), (1, 3), (1, 5), (1, 7), (2, 1))
-    println(toCheck.map(t => countTrees(pathFunc(t._1, t._2))).product)
-
-    inputFile.close()
-  }
+  val toCheck = List((1, 1), (1, 3), (1, 5), (1, 7), (2, 1))
+  println(toCheck.map(t => countTrees(pathFunc(t._1, t._2))).product)
 
   def parseFile(input: Source): GameMap = {
     input.getLines()

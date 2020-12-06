@@ -1,14 +1,12 @@
 import scala.io.Source
 
-object Main {
-  def main(args: Array[String]): Unit = {
-    val inputFile = Source.fromFile("./Day5/input.txt")
-    val seats = parseFile(inputFile).map(parseSeat)
+object Main extends App {
+  val inputFile = Source.fromFile("./Day5/input.txt")
+  val seats = parseFile(inputFile).map(parseSeat)
 
-    val seatIds = part1(seats)
-    println(seatIds.max)
-    println(part2(seatIds).headOption)
-  }
+  val seatIds = part1(seats)
+  println(seatIds.max)
+  println(part2(seatIds).headOption)
 
   def part1(seats: Seq[(Int, Int)]): Seq[Int] = seats.map(seat => seat._1 * 8 + seat._2)
 
