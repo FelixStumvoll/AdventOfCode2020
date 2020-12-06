@@ -31,3 +31,8 @@ lazy val day5 = (project in file("Day5")).settings(
   name := "Day5",
   mainClass in(Compile, run) := Some("Main"),
 )
+
+lazy val day6 = (project in file("Day6")).settings(
+  name := "Day6",
+  mainClass in(Compile, run) := Some("Main"),
+)
