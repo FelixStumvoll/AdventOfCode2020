@@ -1,7 +1,6 @@
 import scala.io.Source
 
 object Main extends App {
-
   type BagMap = Map[String, Map[String, Int]]
   val input = Source.fromFile("Day7/input.txt")
   val bags = parseBags(input.getLines().toList)
